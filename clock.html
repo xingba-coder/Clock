@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body style="background:#886565">
+  <style>
+	.box{width:200px;height:200px;margin:100px auto;border-radius:50%;position:relative;}
+	.box .boxer{background:black;width:14px;height:14px;border-radius:50%;position:absolute;top:91px;left:91px;}
+	#hour{background:black;width:8px;height:40px;
+	position:absolute;top:60px;left:94px;transform-origin:bottom;}
+
+	#min{background:green;width:4px;height:60px;
+	position:absolute;top:40px;left:96px;transform-origin:bottom;}
+
+	#sec{background:red;width:2px;height:80px;
+	position:absolute;top:20px;left:97px;transform-origin:bottom;
+	/*秒针围绕秒针的底部转，如果是center,则围绕秒针的中心转*/}
+
+	#keke li{background:black;width:2px;height:8px;
+	position:absolute;top:0;left:97px;transform-origin:center 100px;/*半径100px*/}
+	ul li{list-style:none;}
+	/*#keke li:nth-child(1){transform:rotate(0deg);}
+	#keke li:nth-child(2){transform:rotate(6deg);}*/
+	#keke li:nth-child(5n+1){height:15px;}
+  </style>
+  <div class="box">
+	<div class="boxer"></div>
+	<div id="hour"></div>
+	<div id="min"></div>
+	<div id="sec"></div>
+	<ul id="keke">
+		
+	</ul>
+  </div>
+  <script type="text/javascript">
+	var kekeDom = document.getElementById("keke");
+	var html="";
+	for(var i=0;i<60;i++){
+		html+="<li style='transform:rotate("+(i*6)+"deg)'></li>";
+	}
+	kekeDom.innerHTML=html;
+	var time = new Date();
+	var secDom = document.getElementById("sec");
+	var minDom = document.getElementById("min");
+	var hourDom = document.getElementById("hour");
+	function drawDate(){
+		window.requestAnimationFrame(drawDate,null);/*这行语句和setInterval();作用一样，自动刷新*/
+		var date = new Date();
+		var sec = date.getSeconds();
+		var min = date.getMinutes()+sec/60;
+		var hour = date.getHours()+min/60;
+		secDom.style.transform = "rotate("+(sec*6)+"deg)";//一秒钟转6度
+		minDom.style.transform = "rotate("+(min*6)+"deg)";//一分钟转6度
+		hourDom.style.transform = "rotate("+(hour*30)+"deg)";//一个小时转30度
+	}
+	drawDate();
+	//setInterval(drawDate,1000);
+  </script>
+ </body>
+</html>
